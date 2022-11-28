@@ -41,3 +41,10 @@ let pokemonList = [
         types: ['grass', 'bug']
     }
 ];
+
+//loop to print pokemon objects with conditional for biggest pokemon height
+for (let i = 0; i < pokemonList.length; i++){
+    document.write(pokemonList[i].height >= 3.5 ? 
+        `${pokemonList[i].name} (height: ${pokemonList[i].height} m) Wow! Big Pokemon! <br>`: 
+        `${pokemonList[i].name} (height: ${pokemonList[i].height} m) <br>`);
+};
