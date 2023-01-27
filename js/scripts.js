@@ -42,9 +42,17 @@ let pokemonList = [
     }
 ];
 
-//loop to print pokemon objects with conditional for biggest pokemon height
-for (let i = 0; i < pokemonList.length; i++){
-    document.write(pokemonList[i].height >= 3.5 ? 
-        `${pokemonList[i].name} (height: ${pokemonList[i].height} m) Wow! Big Pokemon! <br>`: 
-        `${pokemonList[i].name} (height: ${pokemonList[i].height} m) <br>`);
-};
+// for loop to print pokemon objects with conditional for biggest pokemon height
+// for (let i = 0; i < pokemonList.length; i++){
+//     document.write(pokemonList[i].height >= 3.5 ? 
+//         `${pokemonList[i].name} (height: ${pokemonList[i].height} m) Wow! Big Pokemon! <br>`: 
+//         `${pokemonList[i].name} (height: ${pokemonList[i].height} m) <br>`);
+// };
+
+// forEach Loop to print Pokemon Array with conditional for biggest pokemon height
+pokemonList.forEach((pokemon) => {
+    document.write(pokemon.height >= 3.5 ? 
+        `${pokemon.name} (height: ${pokemon.height} m) Wow! Big Pokemon! <br>`: 
+        `${pokemon.name} (height: ${pokemon.height} m) <br>`);
+});
+
