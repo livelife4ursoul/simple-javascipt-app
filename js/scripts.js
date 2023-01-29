@@ -44,8 +44,9 @@ let pokemonRepository = (function() {
         }
     ];
     function add(pokemon) {
-        pokemonList.push(pokemon);
+        Object.keys(pokemon) ? pokemonList.push(pokemon) : !add(pokemon);
     }
+
     function getAll() {
         return pokemonList;
     }
@@ -71,6 +72,7 @@ pokemonRepository.add(
         types: ['water']
     }
 );
+
 // for loop to print pokemon objects with conditional for biggest pokemon height
 // for (let i = 0; i < pokemonList.length; i++){
 //     document.write(pokemonList[i].height >= 3.5 ? 
@@ -85,5 +87,13 @@ pokemonRepository.getAll().forEach((pokemon) => {
         `${pokemon.name} (height: ${pokemon.height} m) <br>`);
 });
 
+// document.write(typeof pokemonRepository)
 
-  
+// let result = pokemonRepository.getAll.filter(pokemonRepository.getAll => pokemonRepository.getAll.length > 7);
+// document.write(result);
+
+// Object.keys(pokemon).forEach(function(property) {
+//     document.write(pokemon[property])
+// });
+
+// document.write(Object.keys(pokemon))
