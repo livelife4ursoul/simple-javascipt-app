@@ -44,16 +44,41 @@ let pokemonRepository = (function() {
         }
     ];
     function add(pokemon) {
-        Object.keys(pokemon) ? pokemonList.push(pokemon) : !add(pokemon);
+        if (
+            typeof pokemon === 'object' &&
+            'name' in pokemon &&
+            'height' in pokemon &&
+            'types' in pokemon
+        
+        ) {
+            pokemonList.push(pokemon);
+        }   
+            else {
+                console.log('not a correct pokemon')
+        }
     }
 
     function getAll() {
         return pokemonList;
     }
+
     return {
         add: add,
-        getAll: getAll
+        getAll: getAll,
+        addListItem: addListItem
     };
+
+    function addListItem(pokemon) {
+        let pokemonListHere = document.querySelector('.pokemon-list');
+        let listItem = document.createElement('li');
+        let button = document.createElement('button');
+    
+        button.innerText = pokemon.name;
+        document.querySelector('.pokemon-list');
+        button.classList.add('list-button');
+        listItem.appendChild(button);
+        pokemonListHere.appendChild(listItem);
+    }
 })();
 
 // add pokemon to array 
@@ -73,6 +98,12 @@ pokemonRepository.add(
     }
 );
 
+// forEach Loop to print Pokemon Array
+
+pokemonRepository.getAll().forEach((pokemon) => {
+    pokemonRepository.addListItem(pokemon);
+});
+
 // for loop to print pokemon objects with conditional for biggest pokemon height
 // for (let i = 0; i < pokemonList.length; i++){
 //     document.write(pokemonList[i].height >= 3.5 ? 
@@ -80,14 +111,22 @@ pokemonRepository.add(
 //         `${pokemonList[i].name} (height: ${pokemonList[i].height} m) <br>`);
 // };
 
-// forEach Loop to print Pokemon Array with conditional for biggest pokemon height
-pokemonRepository.getAll().forEach((pokemon) => {
-    document.write(pokemon.height >= 3.5 ? 
-        `${pokemon.name} (height: ${pokemon.height} m) Wow! Big Pokemon! <br>`: 
-        `${pokemon.name} (height: ${pokemon.height} m) <br>`);
-});
+for (let i = 0; i < pokemonList.length; i++) {
+    const height = pokemonList[i].height;
+        document.write(
+            `${pokemonList[i].name} (height: ${height} m) 
+            ${height >= 3.5 ? 'Wow! Big Pokemon!' : ''} <br>`
+        );
+    }
 
-// document.write(typeof pokemonRepository)
+// Original forEach Loop to print Pokemon Array with conditional for biggest pokemon height
+// pokemonRepository.getAll().forEach((pokemon) => {
+//      document.write(pokemon.height >= 3.5 ? 
+    //     `${pokemon.name} (height: ${pokemon.height} m) Wow! Big Pokemon! <br>`: 
+    //     `${pokemon.name} (height: ${pokemon.height} m) <br>`);
+
+
+// console.log(typeof pokemonRepository)
 
 // let result = pokemonRepository.getAll.filter(pokemonRepository.getAll => pokemonRepository.getAll.length > 7);
 // document.write(result);
@@ -97,3 +136,5 @@ pokemonRepository.getAll().forEach((pokemon) => {
 // });
 
 // document.write(Object.keys(pokemon))
+
+// Object.keys(pokemon) ? pokemonList.push(pokemon) : !add(pokemon);
