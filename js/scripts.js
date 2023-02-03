@@ -43,6 +43,7 @@ let pokemonRepository = (function() {
             types: ['grass', 'bug']
         }
     ];
+    // add pokemon function with object parameters 
     function add(pokemon) {
         if (
             typeof pokemon === 'object' &&
@@ -51,8 +52,10 @@ let pokemonRepository = (function() {
             'types' in pokemon
         
         ) {
+            // if object parameters correct, push pokemon to pokemonList
             pokemonList.push(pokemon);
         }   
+            //if object parameters incorrect log to console
             else {
                 console.log('not a correct pokemon')
         }
@@ -69,15 +72,27 @@ let pokemonRepository = (function() {
     };
 
     function addListItem(pokemon) {
+        //selecting nodes and adding class elements
         let pokemonListHere = document.querySelector('.pokemon-list');
         let listItem = document.createElement('li');
         let button = document.createElement('button');
     
+        //create button for each pokemon
         button.innerText = pokemon.name;
         document.querySelector('.pokemon-list');
         button.classList.add('list-button');
         listItem.appendChild(button);
         pokemonListHere.appendChild(listItem);
+
+        //add event listener to log to console when click on pokemon
+        button.addEventListener('click', function() {
+            showDetails(pokemon);
+        });
+        
+    }
+    //function to log pokemon to console
+    function showDetails(pokemon) {
+        console.log(pokemon);
     }
 })();
 
@@ -111,13 +126,14 @@ pokemonRepository.getAll().forEach((pokemon) => {
 //         `${pokemonList[i].name} (height: ${pokemonList[i].height} m) <br>`);
 // };
 
-for (let i = 0; i < pokemonList.length; i++) {
-    const height = pokemonList[i].height;
-        document.write(
-            `${pokemonList[i].name} (height: ${height} m) 
-            ${height >= 3.5 ? 'Wow! Big Pokemon!' : ''} <br>`
-        );
-    }
+// for loop from above without code duplication
+// for (let i = 0; i < pokemonList.length; i++) {
+//     const height = pokemonList[i].height;
+//         document.write(
+//             `${pokemonList[i].name} (height: ${height} m) 
+//             ${height >= 3.5 ? 'Wow! Big Pokemon!' : ''} <br>`
+//         );
+//     }
 
 // Original forEach Loop to print Pokemon Array with conditional for biggest pokemon height
 // pokemonRepository.getAll().forEach((pokemon) => {
