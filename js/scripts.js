@@ -65,12 +65,6 @@ let pokemonRepository = (function() {
         return pokemonList;
     }
 
-    return {
-        add: add,
-        getAll: getAll,
-        addListItem: addListItem
-    };
-
     function addListItem(pokemon) {
         //selecting nodes and adding class elements
         let pokemonListHere = document.querySelector('.pokemon-list');
@@ -88,12 +82,19 @@ let pokemonRepository = (function() {
         button.addEventListener('click', function() {
             showDetails(pokemon);
         });
-        
+            
     }
     //function to log pokemon to console
     function showDetails(pokemon) {
         console.log(pokemon);
     }
+
+    return {
+        add: add,
+        getAll: getAll,
+        addListItem: addListItem
+    };
+
 })();
 
 // add pokemon to array 
