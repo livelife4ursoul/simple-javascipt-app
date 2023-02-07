@@ -1,64 +1,24 @@
 // IIFE wrap
 let pokemonRepository = (function() {
     //array of different pokemon objects and individual key values.
-    let pokemonList = [
-        {
-            name: 'Bulbasaur',
-            height: 0.7,
-            types: ['grass', 'poison']
-        },
-        {
-            name: 'Arbok',
-            height: 3.5,
-            types: ['poison']
-        },
-        {
-            name: 'Pichu',
-            height: 0.3,
-            types: ['electric']
-        },
-        {
-            name: 'Charmeleon',
-            height: 1.1,
-            types: ['fire']
-        },
-        {
-            name: 'Charizard',
-            height: 1.7,
-            types: ['fire', 'flying']
-        },
-        {
-            name: 'Butterfree',
-            height: 1.1,
-            types: ['bug', 'flying']
-        },
-        {
-            name: 'Ninetales',
-            height: 1.1,
-            types: ['fire']
-        },
-        {
-            name: 'Parasect',
-            height: 1,
-            types: ['grass', 'bug']
-        }
-    ];
+    let pokemonList = [];
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=1279';
     // add pokemon function with object parameters 
     function add(pokemon) {
-        if (
-            typeof pokemon === 'object' &&
-            'name' in pokemon &&
-            'height' in pokemon &&
-            'types' in pokemon
+        // if (
+        //     typeof pokemon === 'object' &&
+        //     'name' in pokemon &&
+        //     'height' in pokemon &&
+        //     'types' in pokemon
         
-        ) {
+        // ) {
             // if object parameters correct, push pokemon to pokemonList
             pokemonList.push(pokemon);
-        }   
-            //if object parameters incorrect log to console
-            else {
-                console.log('not a correct pokemon')
-        }
+        // }   
+        //     //if object parameters incorrect log to console
+        //     else {
+        //         console.log('not a correct pokemon')
+        // }
     }
 
     function getAll() {
@@ -86,72 +46,68 @@ let pokemonRepository = (function() {
     }
     //function to log pokemon to console
     function showDetails(pokemon) {
-        console.log(pokemon);
+        loadDetails(pokemon).then(function() {
+            console.log(pokemon);
+        });
+    }
+//loadList from Api
+    function loadList() {
+        return fetch(apiUrl).then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            json.results.forEach(function (item) {
+                let pokemon = {
+                    name: item.name,
+                    detailsUrl: item.url
+                };
+                add(pokemon);
+            });
+        }).catch(function (e) {
+            console.error(e);
+        })
+    }
+
+//loadDetails from Api
+    function loadDetails(item) {
+        let url = item.detailsUrl;
+        return fetch(url).then(function (response) {
+            return response.json();
+        }).then(function (details) {
+            item.imageUrl = details.sprites.front_default;
+            item.height = details.height;
+            item.types = details.types;
+        }).catch(function (e) {
+            console.error(e)
+        });
     }
 
     return {
         add: add,
         getAll: getAll,
-        addListItem: addListItem
+        addListItem: addListItem,
+        loadList: loadList,
+        loadDetails: loadDetails
     };
 
 })();
 
-// add pokemon to array 
-pokemonRepository.add(
-    {
-        name: 'Wigglytuff',
-        height: 1,
-        types: ['fairy', 'normal'] 
+//call loadList function
+pokemonRepository.loadList().then(function() {
 
-    }
-    );
-pokemonRepository.add(
-    {
-        name: 'Wailord',
-        height: 14.5,
-        types: ['water']
-    }
-);
-
-// forEach Loop to print Pokemon Array
-
-pokemonRepository.getAll().forEach((pokemon) => {
-    pokemonRepository.addListItem(pokemon);
+    // forEach Loop to print Pokemon Array
+    pokemonRepository.getAll().forEach((pokemon) => {
+        pokemonRepository.addListItem(pokemon);
+    });
 });
 
-// for loop to print pokemon objects with conditional for biggest pokemon height
-// for (let i = 0; i < pokemonList.length; i++){
-//     document.write(pokemonList[i].height >= 3.5 ? 
-//         `${pokemonList[i].name} (height: ${pokemonList[i].height} m) Wow! Big Pokemon! <br>`: 
-//         `${pokemonList[i].name} (height: ${pokemonList[i].height} m) <br>`);
-// };
 
-// for loop from above without code duplication
-// for (let i = 0; i < pokemonList.length; i++) {
-//     const height = pokemonList[i].height;
-//         document.write(
-//             `${pokemonList[i].name} (height: ${height} m) 
-//             ${height >= 3.5 ? 'Wow! Big Pokemon!' : ''} <br>`
-//         );
-//     }
-
-// Original forEach Loop to print Pokemon Array with conditional for biggest pokemon height
-// pokemonRepository.getAll().forEach((pokemon) => {
-//      document.write(pokemon.height >= 3.5 ? 
-    //     `${pokemon.name} (height: ${pokemon.height} m) Wow! Big Pokemon! <br>`: 
-    //     `${pokemon.name} (height: ${pokemon.height} m) <br>`);
-
-
-// console.log(typeof pokemonRepository)
+// function getPokemon(name) {
+//     let pokemon = pokemonList.filter((pokemon) => {
+//         return pokemon.name == name;
+//     });
+//     return pokemon [0] || null;
+// }
 
 // let result = pokemonRepository.getAll.filter(pokemonRepository.getAll => pokemonRepository.getAll.length > 7);
 // document.write(result);
 
-// Object.keys(pokemon).forEach(function(property) {
-//     document.write(pokemon[property])
-// });
-
-// document.write(Object.keys(pokemon))
-
-// Object.keys(pokemon) ? pokemonList.push(pokemon) : !add(pokemon);
