@@ -5,20 +5,20 @@ let pokemonRepository = (function() {
     let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=1279';
     // add pokemon function with object parameters 
     function add(pokemon) {
-        // if (
-        //     typeof pokemon === 'object' &&
-        //     'name' in pokemon &&
-        //     'height' in pokemon &&
-        //     'types' in pokemon
-        
-        // ) {
+        if (
+            typeof pokemon === 'object' &&
+            'name' in pokemon &&
+            'detailsUrl' in pokemon 
+            // 'height' in pokemon 
+            // 'types' in pokemon
+        ) {
             // if object parameters correct, push pokemon to pokemonList
             pokemonList.push(pokemon);
-        // }   
-        //     //if object parameters incorrect log to console
-        //     else {
-        //         console.log('not a correct pokemon')
-        // }
+        }   
+            //if object parameters incorrect log to console
+            else {
+                console.log('not a correct pokemon')
+        }
     }
 
     function getAll() {
@@ -50,9 +50,21 @@ let pokemonRepository = (function() {
             console.log(pokemon);
         });
     }
+
+    // let loadingMessage = document.createElement('loadingMessage');
+    // loadingMessage.innerText = 'Loading, please wait...';
+    // document.getElementById('myMessage').appendChild(loadingMessage);
+    // document.addEventListener("DOMContentLoaded", loadingMessage() {
+    //     alert();
+    // };
+
+    // function hideLoadingMessage() {
+
+    // }
 //loadList from Api
     function loadList() {
         return fetch(apiUrl).then(function (response) {
+            
             return response.json();
         }).then(function (json) {
             json.results.forEach(function (item) {
