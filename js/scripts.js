@@ -29,7 +29,7 @@ let pokemonRepository = (function() {
         let listItem = document.createElement('li');
         let button = document.createElement('button');
     
-        //create button for each pokemon
+        //create button for each pokemon added extra code to Capitalize the first letter of Each pokemon
         button.innerText = pokemon.name.toLowerCase().replace(/\b[a-z]/g, function(letter) {
             return letter.toUpperCase();
         });
@@ -111,6 +111,20 @@ let pokemonRepository = (function() {
         modal.appendChild(titleElement);
         modal.appendChild(contentElement);
         modal.appendChild(myImage);
+
+      // hideModal when ESC key is pressed
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
+            hideModal();
+        }
+      });
+      // hideModal if click on page outside modal
+        modalContainer.addEventListener('click', (e) => {
+            let target = e.target;
+             if (target === modalContainer) {
+            hideModal();
+        }
+      });
     
     }
 
@@ -120,19 +134,7 @@ let pokemonRepository = (function() {
         let modalContainer = document.querySelector('#modal-container');
         modalContainer.classList.remove('is-visible');
 
-        // hideModal when ESC key is pressed
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
-              hideModal();
-            }
-          });
-          // hideModal if click on page outside modal
-          modalContainer.addEventListener('click', (e) => {
-            let target = e.target;
-            if (target === modalContainer) {
-              hideModal();
-            }
-          });
+      
         
         if (dialogPromiseReject) {
             dialogPromiseReject();
@@ -159,9 +161,6 @@ let pokemonRepository = (function() {
     };
 
 })();
-
-
-
 
 //call loadList function
 pokemonRepository.loadList().then(function() {
