@@ -1,4 +1,4 @@
-button,
+/* button,
     .list-button {
         color: yellow;
         display: inline-block;
@@ -13,8 +13,8 @@ button,
  	    border-radius: 10px;
         border-bottom: 2px solid rgba(0, 0, 0, 0.3);
  	    transition: 0.2s opacity;
-        overflow: auto;
-}
+        overflow: auto; */
+/* } */
 
 #modal-container {
     display: none;
