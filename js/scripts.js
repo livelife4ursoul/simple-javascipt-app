@@ -39,7 +39,11 @@ let pokemonRepository = (function() {
         button.classList.add('btn');
         button.classList.add('btn-block');
         button.classList.add('btn-primary');
+        listItem.classList.add('border-5');
+        listItem.classList.add('col-sm-6')
         listItem.classList.add('col-md-4');
+        listItem.classList.add('col-lg-3');
+        listItem.classList.add('col-xl-2');
         listItem.appendChild(button);
         pokemonListHere.appendChild(listItem);
 
