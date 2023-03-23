@@ -1,8 +1,8 @@
 // IIFE wrap
 let pokemonRepository = (function() {
     //array of different pokemon objects and individual key values.
-    let pokemonList = [];
-    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=1279';
+    const pokemonList = [];
+    const apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=1279';
     // add pokemon function with object parameters 
     function add(pokemon) {
         if (
@@ -31,7 +31,8 @@ let pokemonRepository = (function() {
         let button = document.createElement('button');
     
         //create button for each pokemon added extra code to Capitalize the first letter of Each pokemon
-        button.innerText = pokemon.name.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+        button.innerText = pokemon.name
+        .toLowerCase().replace(/\b[a-z]/g, function(letter) {
             return letter.toUpperCase();
         });
         document.querySelector('.pokemon-list');
@@ -87,48 +88,32 @@ let pokemonRepository = (function() {
             console.error(e)
         });
     }
-    // get search bar element
-// function searchPokemon() {
-//     let searchInput = document.getElementById('searchInput');
-//     let searchText = searchInput.value.toLowerCase();
-//     let allPokemon = document.querySelectorAll('.list-group-item');
 
-//     allPokemon.forEach(function(pokemon) {
-//         let pokemonName = pokemonList;
-//         if (pokemonName.includes(searchText)) {
-//             pokemon.style.display = 'none';
-//         }
-//     });
-// }   
+    // creating search bar function
 
-// let searchInput = document.getElementById('searchInput');
-// searchInput.addEventListener('input', function () {
-//     searchPokemon();
-// });
-// function searchPokemon() {
-//     let pokemonList = [];
-//     console.log(searchInput);
-//     searchInput.addEventListener('keyup', (e) => {
-//         const searchString = e.target.value.toLowerCase();
-//         const filteredPokemon = pokemonList.filter(pokemon => {
-//             return pokemon.name.toLowerCase().includes(searchString);
-//         });
-//         console.log(filteredPokemon);
+
+    searchInput.addEventListener('keyup', (e) => {
+        searchPokemon();
+    });
+
+    function searchPokemon() {
         
-//     });
-// }
-
+        const searchText = $("#searchInput").val().toLowerCase();
+        $(".pokemon-list").empty();
+        pokemonList.forEach(function(pokemon) {
+            if (pokemon.name.toLowerCase().startsWith(searchText)) {
+                addListItem(pokemon);
+            }
+        });
+        console.log(searchText);
+       }
 
     
 // showModal to display pokemon details when button is clicked
     function showModal(pokemon) {
 
-        
-
         let modalBody = $('.modal-body');
-        let modalHeader = $('.modal-header');
         let modalTitle = $('.modal-title');
-        // let modalHeader = $('.modal-header');
         // clear existing content of modal
         modalTitle.empty();
         modalBody.empty();
@@ -143,89 +128,24 @@ let pokemonRepository = (function() {
         // add height to details modal
         let heightElement = $("<p>" + `Height: ${pokemon.height} m` + "</p>");
         // add types to details modal
-        let pokemonElement = [];
-        // pokemon.types.forEach(function() {
-        pokemonElement += ["<p>" + `Types: ${pokemon.types}` + "</p>"];
-        // });
-        // let pokemonTypes = document.createElement('ul');
-        // pokemonTypes.classList.add('.pokemon-types');
-        // pokemonTypes.innerHTML = pokemonElement;
-
+        const typesArray = pokemon.types.map(function (type) {
+            return type.type.name;
+        });
+        const typesFormatted = typesArray.join(", ");
+        let pokemonElement = $("<p>" + `Types: ${typesFormatted}` + "</p>");
 
         
         modalTitle.append(titleElement);
         modalBody.append(myImage);
         modalBody.append(heightElement);
         modalBody.append(pokemonElement);
-    
-    //     let modalContainer = document.querySelector('#modal-container');
-
-    //     modalContainer.innerHTML = '';
-
-    //     let modal = document.createElement('div');
-    //     modal.classList.add('modal');
-    
-    //     let closeButtonElement = document.createElement('button');
-    //     closeButtonElement.classList.add('modal-close');
-    //     closeButtonElement.innerText = 'Close';
-    //     closeButtonElement.addEventListener('click', hideModal);
-        
-    //     let titleElement = document.createElement('h1');
-    //     titleElement.innerText = pokemon.name.toLowerCase().replace(/\b[a-z]/g, function(letter) {
-    //         return letter.toUpperCase();
-    //     });
-
-    //     // add image to details modal
-    //     let myImage = document.createElement('img');
-    //     myImage.classList.add('myImage');
-    //     myImage.src = pokemon.imageUrl;
-        
-        
-    //     let contentElement = document.createElement('p');
-    //     contentElement.innerText = (`Height: ${pokemon.height}`);
-    
-    //     modalContainer.appendChild(modal);
-    //     modalContainer.classList.add('is-visible');
-    //     modal.appendChild(closeButtonElement);
-    //     modal.appendChild(titleElement);
-    //     modal.appendChild(contentElement);
-    //     modal.appendChild(myImage);
-
-    //      // hideModal when ESC key is pressed
-    //     window.addEventListener('keydown', (e) => {
-    //         if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
-    //         hideModal();
-    //         }
-    //     });
-    //   // hideModal if click on page outside modal
-    //     modalContainer.addEventListener('click', (e) => {
-    //         let target = e.target;
-    //          if (target === modalContainer) {
-    //         hideModal();
-    //         }
-    //     });
-    
     }
-
-    // let dialogPromiseReject;
-       
-    // function hideModal() {
-    //     let modalContainer = document.querySelector('#modal-container');
-    //     modalContainer.classList.remove('is-visible');
-
-    //     if (dialogPromiseReject) {
-    //         dialogPromiseReject();
-    //         dialogPromiseReject = null;
-    //     }
-    // }
-
 
     function showDetails(item) {
         pokemonRepository.loadDetails(item).then(function(){
             showModal(item);
         });
     }
-
 
     return {
         add: add,
@@ -235,14 +155,11 @@ let pokemonRepository = (function() {
         loadDetails: loadDetails,
         showDetails: showDetails,
         showModal: showModal,
-        // searchPokemon: searchPokemon
-        // hideModal: hideModal
+        searchPokemon: searchPokemon
     };
 
+
 })();
-
-
-
 
 //call loadList function
 pokemonRepository.loadList().then(function() {
@@ -250,116 +167,7 @@ pokemonRepository.loadList().then(function() {
     // forEach Loop to print Pokemon Array
     pokemonRepository.getAll().forEach((pokemon) => {
         pokemonRepository.addListItem(pokemon);
-        
-    // pokemonRepository.searchPokemon();
-        
     });
 });
 
 
-
-
-// Everything below is code I am working through, but it's not ready to be implemented
-
-// function getPokemon(name) {
-//     let pokemon = pokemonList.filter((pokemon) => {
-//         return pokemon.name == name;
-//     });
-//     return pokemon [0] || null;
-// }
-
-// let result = pokemonRepository.getAll.filter(pokemonRepository.getAll => pokemonRepository.getAll.length > 7);
-// document.write(result);
-
-
-
-    // let loadingMessage = document.createElement('loadingMessage');
-    // loadingMessage.innerText = 'Loading, please wait...';
-    // document.getElementById('myMessage').appendChild(loadingMessage);
-    // document.addEventListener("DOMContentLoaded", loadingMessage() {
-    //     alert();
-    // };
-
-    // function hideLoadingMessage() {
-
-    // }
-
-    // function searchPokemon(namesFromDOM) {
-    //     pokemon = pokemonList.filter((pokemon) => {
-    //         return pokemonList.name == pokemon;
-    //     });
-    //     return pokemon[0] || null;
-    // }
-
-    // const searchButton = document.getElementById('search-button');
-    // const searchInput = document.getElementById('search-input');
-    // searchButton.addEventListener('click', () => {
-    // const inputValue = searchPokemon();
-    // alert(inputValue);
-    // });
-
-    // function searchPokemon(results) {
-    //     for (pokemonList of results) {
-    //         const resultItem = document.createElement('li');
-    //         resultItem.classList.add('result-item');
-    //         const text = document.createTextNode(pokemonList.name);
-    //         resultItem.appendChild(text);
-    //         list.appendChild(resultItem);
-    //     }
-    // }
-
-    // const searchInput = document.querySelector('.search-input');
-
-    // searchInput.addEventListener('search-input', (e) => {
-    //     let value = e.target.value
-    //     if (value && value.trim().length > 0){
-    //         value = value.trim().toLowerCase()
-    //         searchPokemon(pokemonList.filter(pokemon => {
-    //             return pokemonList.name.includes(value);
-    //         }))
-    //     } else {
-
-    //     }
-    // })
-
-    // function searchPokemon () {
-    //     let t=document.querySelector(".search-input");
-    //     let l=document.querySelector(".pokemon-list").getElementsByTagName("li");
-        
-    //     for(let i=0;i<l.length;i++)l[i].classList.remove("hide");
-    //     for(let n=0;n<l.length;n++)""===t.value||l[n].innerText.indexOf(t.value)&&l[n].classList.add("hide")}
-
-       
-// const searchInput = document.getElementById("searchInput");
-
-// // store name elements in array-like object
-
-// const namesFromDOM = document.getElementsByTagName("li");
-
-// // listen for user events
-
-// searchInput.addEventListener("keyup", (event) => {
-//   const { value } = event.target;
-
-//   // get user search input converted to lowercase
-
-//   const searchQuery = value.toLowerCase();
-
-//   for (const nameElement of namesFromDOM) {
-//     // store name text and convert to lowercase
-
-//     let name = nameElement.textContent.toLowerCase();
-
-//     // compare current name to search input
-
-//     if (name.includes(searchQuery)) {
-//       // found name matching search, display it
-
-//       nameElement.style.display = "block";
-//     } else {
-//       // no match, don't display name
-
-//       nameElement.style.display = "none";
-//     }
-//   }
-// });
