@@ -127,9 +127,10 @@ let pokemonRepository = (function() {
 
         let modalBody = $('.modal-body');
         let modalHeader = $('.modal-header');
+        let modalTitle = $('.modal-title');
         // let modalHeader = $('.modal-header');
         // clear existing content of modal
-        modalHeader.empty();
+        modalTitle.empty();
         modalBody.empty();
 
         //create element for name in modal
@@ -150,12 +151,9 @@ let pokemonRepository = (function() {
         // pokemonTypes.classList.add('.pokemon-types');
         // pokemonTypes.innerHTML = pokemonElement;
 
-        
-
-    
 
         
-        modalHeader.append(titleElement);
+        modalTitle.append(titleElement);
         modalBody.append(myImage);
         modalBody.append(heightElement);
         modalBody.append(pokemonElement);
