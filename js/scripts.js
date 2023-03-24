@@ -25,33 +25,18 @@ let pokemonRepository = (function() {
 
     function addListItem(pokemon) {
         //selecting nodes and adding class elements
-        let pokemonListHere = document.querySelector('.pokemon-list');
-        let listItem = document.createElement('li');
-        listItem.classList.add('list-group-item');
-        let button = document.createElement('button');
-    
-        //create button for each pokemon added extra code to Capitalize the first letter of Each pokemon
-        button.innerText = pokemon.name
-        .toLowerCase().replace(/\b[a-z]/g, function(letter) {
-            return letter.toUpperCase();
-        });
-        document.querySelector('.pokemon-list');
-        button.classList.add('list-button');
-        button.classList.add('btn');
-        button.classList.add('btn-block');
-        button.classList.add('btn-primary');
-        button.setAttribute('data-toggle', 'modal');
-        button.setAttribute('data-target', '#buttonModal');
-        listItem.classList.add('border-5');
-        listItem.classList.add('col-sm-6')
-        listItem.classList.add('col-md-4');
-        listItem.classList.add('col-lg-3');
-        listItem.classList.add('col-xl-2');
-        listItem.appendChild(button);
-        pokemonListHere.appendChild(listItem);
+        let pokemonListHere = $('.pokemon-list');
+        let listItem = $('<li></li>');
+        listItem.addClass('list-group-item border-5 col-sm-6 col-md-4 col-lg-3 col-xl-2');
+        //creating button and Capitalizing pokemon name
+        let pokemonName = pokemon.name.substr(0, 1).toUpperCase() + pokemon.name.substr(1);
+        let button = $('<button class="list-button btn btn-block btn-primary" data-toggle="modal" data-target="#buttonModal">' + pokemonName + '</button>');
 
-        //add event listener to log to console when click on pokemon
-        button.addEventListener('click', function() {
+        listItem.append(button);
+        pokemonListHere.append(listItem);
+
+        //add event listener to log to showModal of pokemon details
+        button.on('click', function() {
             showDetails(pokemon);
         });
             
@@ -90,14 +75,11 @@ let pokemonRepository = (function() {
     }
 
     // creating search bar function
-
-
-    searchInput.addEventListener('keyup', (e) => {
+    searchInput.addEventListener('keypress', (e) => {
         searchPokemon();
     });
 
     function searchPokemon() {
-        
         const searchText = $("#searchInput").val().toLowerCase();
         $(".pokemon-list").empty();
         pokemonList.forEach(function(pokemon) {
@@ -107,11 +89,9 @@ let pokemonRepository = (function() {
         });
         console.log(searchText);
        }
-
     
 // showModal to display pokemon details when button is clicked
     function showModal(pokemon) {
-
         let modalBody = $('.modal-body');
         let modalTitle = $('.modal-title');
         // clear existing content of modal
@@ -123,18 +103,17 @@ let pokemonRepository = (function() {
                     return letter.toUpperCase();
                 }) + "</h1>");
         // add image to details modal
-        let myImage = $('<img class="modal-img" style="width:20%">');
+        let myImage = $('<img class="modal-img" style="width:40%">');
         myImage.attr("src", pokemon.imageUrl);
         // add height to details modal
-        let heightElement = $("<p>" + `Height: ${pokemon.height} m` + "</p>");
+        let heightElement = $("<h5>" + `Height: ${pokemon.height} m` + "</h5>");
         // add types to details modal
         const typesArray = pokemon.types.map(function (type) {
             return type.type.name;
         });
         const typesFormatted = typesArray.join(", ");
-        let pokemonElement = $("<p>" + `Types: ${typesFormatted}` + "</p>");
+        let pokemonElement = $("<h5>" + `Types: ${typesFormatted}` + "</h5>");
 
-        
         modalTitle.append(titleElement);
         modalBody.append(myImage);
         modalBody.append(heightElement);
