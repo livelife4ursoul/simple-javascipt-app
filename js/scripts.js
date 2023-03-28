@@ -87,7 +87,6 @@ let pokemonRepository = (function() {
                 addListItem(pokemon);
             }
         });
-        console.log(searchText);
        }
     
 // showModal to display pokemon details when button is clicked
