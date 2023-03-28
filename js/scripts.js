@@ -2,7 +2,7 @@
 let pokemonRepository = (function() {
     //array of different pokemon objects and individual key values.
     const pokemonList = [];
-    const apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=1279';
+    const apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=600';
     // add pokemon function with object parameters 
     function add(pokemon) {
         if (
@@ -103,7 +103,7 @@ let pokemonRepository = (function() {
                     return letter.toUpperCase();
                 }) + "</h1>");
         // add image to details modal
-        let myImage = $('<img class="modal-img" style="width:40%">');
+        let myImage = $('<img class="modal-img" style="width:20%">');
         myImage.attr("src", pokemon.imageUrl);
         // add height to details modal
         let heightElement = $("<h5>" + `Height: ${pokemon.height} m` + "</h5>");
