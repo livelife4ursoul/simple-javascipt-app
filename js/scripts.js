@@ -15,7 +15,9 @@ let pokemonRepository = (function() {
         }   
             //if object parameters incorrect log to console
             else {
-                console.log('not a correct pokemon')
+                /* eslint-disable no-console */
+                console.error('not a correct pokemon', pokemon);
+                /* eslint-disable no-console */
         }
     }
 
@@ -135,8 +137,6 @@ let pokemonRepository = (function() {
         showModal: showModal,
         searchPokemon: searchPokemon
     };
-
-
 })();
 
 //call loadList function

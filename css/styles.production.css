@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 2 version
+*/
+
 :root {
     --background: linear-gradient(to right, #f00, #c00, #3b4cca, #ffde00, #b3a125);
     --background-tilt: linear-gradient(45 deg, #f00, #c00, #3b4cca, #ffde00, #b3a125);
@@ -35,7 +42,8 @@ body {
 .modal-content {
     position: fixed; 
     padding: 10%;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     top: 0;
     left: 0;
     width: 100%;
@@ -43,6 +51,7 @@ body {
     background: var(--background);
     z-index: 999;
     overflow: auto;
+    display: -ms-grid;
     display: grid;
     text-align: center;
 }
