@@ -1,0 +1,73 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 2 version
+*/
+
+:root {
+    --background: linear-gradient(to right, #f00, #c00, #3b4cca, #ffde00, #b3a125);
+    --background-tilt: linear-gradient(45 deg, #f00, #c00, #3b4cca, #ffde00, #b3a125);
+}
+
+body {
+    background-image: var(--background);
+}
+
+.list-group {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding-right: 15px;
+    padding-left: 10px;
+    border-left: 2px #0275d8;
+    border-bottom: 2px solid rbga(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.list-group-item {
+    background: var(--background-tilt);
+    margin: 0;
+    padding: 5px;
+    
+}
+
+.list-button {
+    background: var(--background-tilt);
+    font-size: 20px;
+    font-weight: 700;
+    border: 2px #0275d8 solid;
+    border-bottom: 2px solid #0275d8(0, 0, 0, 0.3);
+}
+
+.modal-content {
+    position: fixed; 
+    padding: 10%;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--background);
+    z-index: 999;
+    overflow: auto;
+    display: -ms-grid;
+    display: grid;
+    text-align: center;
+}
+
+#modal-body p{
+    margin-top: 20px;
+    font: 100px;
+}
+
+.page-content {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    padding-top: 10px;
+}
+
+.navbar {
+    margin-bottom: 50px;
+    padding: 15px;
+}
